@@ -10,7 +10,7 @@ npm install -g mermaid-md-svg
 ## Usage
 
 ### Define Diagrams
-First, create markdown files that contain the diagram definitions, using mermaid syntax. \ 
+First, create markdown files that contain the diagram definitions, using mermaid syntax. \
 The diargram definitions must be in a `mermaid` code fence.
 
 Example:
@@ -26,10 +26,10 @@ flowchart LR
 ````
 
 Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews,
-for vs code for example.
+for `vs code` for example.
 
 ### Build Diagrams
-Then symply run:
+Then simply run:
 ```bash
 mermaid-md-svg [options] <input> <output>
 ```
