@@ -11,11 +11,12 @@ const mdToDiagram = async function(md) {
 };
 
 const fileExists = async function (path) {
-  let exists;
-  fs.stat(path)
-    .then(() => { exists = true })
-    .catch(() => { exists = false });
-  return exists;
+  try {
+    await fs.stat(path);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 const checkDirectories = async function (input, output) {
