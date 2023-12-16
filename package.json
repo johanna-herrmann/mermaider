@@ -1,0 +1,25 @@
+{
+  "name": "mermaid-md-svg",
+  "version": "0.1.0",
+  "description": "Builds mermaid diagrams based on definitions in MarkDown files.",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "mermaid-md-svg": "./index.js"
+  },
+  "scripts": {},
+  "keywords": [
+    "mermaid",
+    "build",
+    "svg",
+    "md",
+    "markdown"
+  ],
+  "author": "mark-herrmann",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "commander": "^11.1.0",
+    "mermaid-parse": "^2.1.0"
+  }
+}
