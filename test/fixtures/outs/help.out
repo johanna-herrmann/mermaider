@@ -1,0 +1,13 @@
+Usage: mermaider [options] <input> <output>
+
+Reads md files in input directory and saves the diagrams (svg) into output directory.
+    More Information: https://www.npmjs.com/package/mermaider
+
+Arguments:
+  input          The input directory where the MD files are.
+  output         The output directory where the diagrams will be saved.
+
+Options:
+  -a, --all      Re-build all diagrams. This will also build files that already exists (overwrite).
+  -v, --verbose  Log files while beeing processed.
+  -h, --help     display help for command
