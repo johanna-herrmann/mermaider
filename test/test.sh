@@ -18,14 +18,14 @@ mermaider fixtures out/init &> /dev/null
 echo 'prepare: --all NOT set'
 mkdir out/notAll
 mermaider fixtures out/notAll &> /dev/null
-echo "modified" > out/notAll/simple.svg
+echo -n "modified" > out/notAll/simple.svg
 mermaider fixtures out/notAll &> /dev/null
 
 # --all set
 echo 'prepare: --all IS set'
 mkdir out/all
 mermaider fixtures out/all &> /dev/null
-echo "modified" > out/all/simple.svg
+echo -n "modified" > out/all/simple.svg
 mermaider --all fixtures out/all &> /dev/null
 
 # one invalid
@@ -41,11 +41,11 @@ mermaider out out/oneInvalid &> /dev/null
 # not verbose
 echo 'prepare output: not verbose'
 mkdir out/tmp
-unbuffer mermaider --all fixtures out/tmp > out/notVerbose.out
+mermaider --all fixtures out/tmp > out/notVerbose.out
 
 # verbose
 echo 'prepare output: verbose'
-unbuffer mermaider --all --verbose fixtures out/tmp > out/verbose.out
+mermaider --all --verbose fixtures out/tmp > out/verbose.out
 
 # invalid input directory
 echo 'prepare output: invalid input directory'
@@ -67,11 +67,10 @@ echo 'prepare output: one md file is invalid'
 mermaider --all out out/tmp 2> out/oneInvalid.err 1> out/oneInvalid.out
 mermaider --all --verbose out out/tmp 2> out/oneInvalidVerbose.err 1> out/oneInvalidVerbose.out
 mermaider --all --verbose out out/tmp &> out/oneInvalidVerbose.both
-unbuffer mermaider --all --verbose out out/tmp &> out/oneInvalidVerboseFormatted.both
 
 # help text
 echo 'prepare output: help text'
-unbuffer mermaider --help > out/help.out
+mermaider --help > out/help.out
 
 
 ###### doing tests

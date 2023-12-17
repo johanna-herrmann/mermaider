@@ -8,6 +8,7 @@ Arguments:
   output         The output directory where the diagrams will be saved.
 
 Options:
-  -a, --all      Re-build all diagrams. This will also build files that already exists (overwrite).
+  -a, --all      Re-build all diagrams. This will also build files that already
+                 exists (overwrite).
   -v, --verbose  Log files while beeing processed.
   -h, --help     display help for command

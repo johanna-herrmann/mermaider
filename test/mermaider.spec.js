@@ -1,4 +1,5 @@
-import { assert } from 'assertthat';
+'use strict';
+
 import fs from 'fs/promises';
 
 const fileExists = async function (path) {
@@ -31,7 +32,7 @@ describe('mermaider', () => {
       const diagram = await getActualDiagramContent(name, location);
       const expectedDiagram = await getFileContent(`./fixtures/${name}`);
 
-      assert.that(generalize(diagram)).is.equalTo(generalize(expectedDiagram));
+      expect(generalize(diagram)).toBe(generalize(expectedDiagram));
     };
 
     test('builds all diagrams initially.', async () => {
@@ -53,13 +54,13 @@ describe('mermaider', () => {
       await assertDiagram('forms-and-links.svg', 'notAll');
       await assertDiagram('sequenceWithActors.svg', 'notAll');
       await assertDiagram('subgraphs.svg', 'notAll');
-      assert.that(actualSimple).is.equalTo('modified\n');
+      expect(actualSimple).toBe('modified');
     });
 
     test('still builds valid diagrams, if one is invalid.', async () => {
       const invalidExists = await fileExists('out/invalid.svg');
       await assertDiagram('simple.svg', 'oneInvalid');
-      assert.that(invalidExists).is.false();
+      expect(invalidExists).toBeFalsy();
     });
   });
 
@@ -67,12 +68,12 @@ describe('mermaider', () => {
     const assertFilesEqual = async function (name) {
       const expected = await getFileContent(`fixtures/outs/${name}`);
       const actual = await getFileContent(`out/${name}`);
-      assert.that(actual).is.equalTo(expected);
+      expect(actual).toBe(expected);
     };
 
     const assertEmpty = async function (name) {
       const actual = await getFileContent(`out/${name}`);
-      assert.that(actual.trim()).is.empty();
+      expect(actual.trim()).toBe('');
     };
 
     test('outputs nothing on success, if --verbose is NOT set.', async () => {

@@ -26,7 +26,6 @@
     "mermaid-parse": "^2.1.0"
   },
   "devDependencies": {
-    "assertthat": "^6.5.2",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.0.1",

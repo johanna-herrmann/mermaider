@@ -21,8 +21,6 @@ jobs:
     - name: Install dependencies
       run: |
         npm install
-        sudo apt update
-        sudo apt install unbuffer
     - name: Install CLI
       run: |
         npm install -g
