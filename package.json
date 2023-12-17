@@ -1,11 +1,11 @@
 {
-  "name": "mermaid-md-svg",
+  "name": "mermaider",
   "version": "0.1.0",
   "description": "Builds mermaid diagrams based on definitions in MarkDown files.",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "mermaid-md-svg": "./index.js"
+    "mermaider": "./index.js"
   },
   "scripts": {},
   "keywords": [
