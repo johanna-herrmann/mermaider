@@ -24,8 +24,10 @@ flowchart LR
 ```
 ````
 
-Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews,
-for `vs code` for example.
+Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews. \
+Here is an example, using [Visual Studio Code](https://code.visualstudio.com/): \
+![example](./vsc-md-highlight-preview-example.png)
+
 
 ### Build Diagrams
 Then simply run:
