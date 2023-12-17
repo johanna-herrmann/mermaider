@@ -17,12 +17,9 @@ const getFileContent = async function (path) {
 
 describe('mermaider', () => {
   describe('build', () => {
-
     // removes specific diagram id, cause this is always a new one
     const generalize = function (diagram) {
-      return diagram
-        .replace(/id="mermaid-[0-9]+"/, 'id="mermaid-id"')
-        .replace(/#mermaid-[0-9]+/g, '#mermaid-id');
+      return diagram.replace(/id="mermaid-[0-9]+"/, 'id="mermaid-id"').replace(/#mermaid-[0-9]+/g, '#mermaid-id');
     };
 
     const getActualDiagramContent = async function (name, location) {
@@ -76,7 +73,7 @@ describe('mermaider', () => {
     const assertEmpty = async function (name) {
       const actual = await getFileContent(`out/${name}`);
       assert.that(actual.trim()).is.empty();
-    }
+    };
 
     test('outputs nothing on success, if --verbose is NOT set.', async () => {
       await assertEmpty('notVerbose.out');
@@ -106,7 +103,7 @@ describe('mermaider', () => {
       await assertEmpty('missingArgs0.out');
       await assertEmpty('missingArgs1.out');
     });
-    
+
     test('outputs only build errors, if --verbose is NOT set.', async () => {
       await assertFilesEqual('oneInvalid.err');
       await assertEmpty('oneInvalid.out');
