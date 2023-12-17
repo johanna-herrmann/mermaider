@@ -40,11 +40,11 @@ const checkDirectories = async function (input, output) {
   const inputStats = inputExists && await fs.stat(input);
   const outputStats = outputExists && await fs.stat(output);
   if (!inputExists || !inputStats.isDirectory()) {
-    printError('Error: input does not exist or is not a directory.', true);
+    printError('input does not exist or is not a directory.', true);
     process.exit(1);
   }
   if (!outputExists || !outputStats.isDirectory()) {
-    printError('Error: output does not exist or is not a directory.', true);
+    printError('output does not exist or is not a directory.', true);
     process.exit(1);
   }
 };
@@ -71,7 +71,7 @@ const buildFiles = async function (input, output, all, verbose) {
       if (verbose) printSuccess(' OK');
     } catch (err) {
       if (verbose) printError(' Error', false);
-      printError(err.message, true);
+      printError(`${fileName}: ${err.message}`, true);
     }
   }
 };

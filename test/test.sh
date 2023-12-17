@@ -1,7 +1,8 @@
 #!/bin/bash
 
 ###### always removing out directory after testing
-trap "rm -rf out; trap INT; trap EXIT" INT EXIT
+trap "rm -rf out; trap INT; trap EXIT; exit 1" INT
+trap "rm -rf out; trap INT; trap EXIT" EXIT
 
 mkdir out
 
