@@ -4,6 +4,7 @@
   "description": "Builds mermaid diagrams based on definitions in MarkDown files.",
   "main": "index.js",
   "type": "module",
+  "private": "false",
   "bin": {
     "mermaider": "./index.js"
   },
