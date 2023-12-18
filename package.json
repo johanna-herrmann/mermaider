@@ -4,12 +4,17 @@
   "description": "Builds mermaid diagrams based on definitions in MarkDown files.",
   "main": "index.js",
   "type": "module",
+  "private": "false",
   "bin": {
     "mermaider": "./index.js"
   },
   "scripts": {
     "test": "cd test && chmod a+x ./test.sh && ./test.sh",
     "lint": "eslint '**/*.js' --quiet --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mark-herrmann/mermaider.git"
   },
   "keywords": [
     "mermaid",
