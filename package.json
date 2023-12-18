@@ -12,6 +12,10 @@
     "test": "cd test && chmod a+x ./test.sh && ./test.sh",
     "lint": "eslint '**/*.js' --quiet --fix"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mark-herrmann/mermaider.git"
+  },
   "keywords": [
     "mermaid",
     "build",

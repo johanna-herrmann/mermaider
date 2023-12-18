@@ -1,5 +1,10 @@
 # Mermaider
-Simply build [Mermaid](https://mermaid.js.org/) diagrams (svg) based on Mardown files.
+
+[![npm](https://img.shields.io/npm/v/mermaider)](https://www.npmjs.com/package/mermaider)
+
+Simply build [Mermaid](https://mermaid.js.org/) diagram SVGs based on Mardown files.
+
+![using mermaider](./mermaider.png)
 
 ## Install
 ```
