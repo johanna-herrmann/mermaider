@@ -18,10 +18,18 @@ const getFileContent = async function (path) {
 
 describe('mermaider', () => {
   describe('build', () => {
+    const needles = {
+      'forms-and-links.svg': 'data of forms and links',
+      'sequenceWithActors.svg': 'See you later aligator',
+      'simple.svg': 'simple graph',
+      'subgraphs.svg': 'B in A Subgraph'
+    };
+
     const assertDiagram = async function (name, location) {
       const diagram = await getFileContent(`./out/${location}/${name}`);
 
       expect(diagram).toMatch(/^<svg .*>.*<\/svg>$/su);
+      expect(diagram).toMatch(new RegExp(needles[name], 'su'));
     };
 
     test('builds all diagrams initially.', async () => {

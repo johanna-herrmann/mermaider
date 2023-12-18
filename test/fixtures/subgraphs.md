@@ -2,7 +2,7 @@
 flowchart LR;
   subgraph sub [A Subgraph]
   direction LR
-    A --> B
+    A --> B(B in A Subgraph)
   end
   B --> C
 ```

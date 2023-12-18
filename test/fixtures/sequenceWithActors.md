@@ -4,5 +4,5 @@ sequenceDiagram
   actor Bob
   Alice ->> Bob: Hi Bob
   Bob ->> Alice: Hi Alice
-  Alice --) Bob: See you later
+  Alice --) Bob: See you later aligator
 ```
