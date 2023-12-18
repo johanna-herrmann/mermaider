@@ -23,7 +23,8 @@
     "build",
     "svg",
     "md",
-    "markdown"
+    "markdown",
+    "cli"
   ],
   "author": "mark-herrmann",
   "license": "MIT",
