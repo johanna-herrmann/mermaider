@@ -1,10 +1,9 @@
-# Mermaid MD to SVG
-
-This CLI Tool builds [Mermaid](https://mermaid.js.org/) diagrams based on definitions in MarkDown files.
+# Mermaider
+Simply build [Mermaid](https://mermaid.js.org/) diagrams (svg) based on Mardown files.
 
 ## Install
 ```
-npm install -g mermaid-md-svg
+npm install -g mermaider
 ```
 
 ## Usage
@@ -25,18 +24,20 @@ flowchart LR
 ```
 ````
 
-Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews,
-for `vs code` for example.
+Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews. \
+Here is an example, using [Visual Studio Code](https://code.visualstudio.com/): \
+![example](./vsc-md-highlight-preview-example.png)
+
 
 ### Build Diagrams
 Then simply run:
 ```bash
-mermaid-md-svg [options] <input> <output>
+mermaider [options] <input> <output>
 ```
 
 Example:
 ```bash
-mermaid-md-svg -all ./md-files ./svg-files
+mermaider --all ./md-files ./svg-files
 ```
 
 #### Arguments

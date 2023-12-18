@@ -1,34 +1,51 @@
 #! /usr/bin/env node
+'use strict';
 
 import { program } from 'commander';
 import chalk from 'chalk';
 import mermaidParse from 'mermaid-parse';
 import fs from 'fs/promises';
 
-const mdToDiagram = async function(md) {
+const NEW_LINE = process.platform === 'win32' ? '\r\n' : '\n';
+
+const printSuccess = function (text) {
+  process.stdout.write(chalk.green.bold(`${text}${NEW_LINE}`));
+};
+
+const printError = function (text, stderr) {
+  const writer = stderr ? process.stderr : process.stdout;
+  writer.write(chalk.red.bold(`${text}${NEW_LINE}`));
+};
+
+const printFilename = function (filename) {
+  process.stdout.write(chalk.bold(filename));
+};
+
+const mdToDiagram = async function (md) {
   const definition = md.replace(/^```mermaid\s(.*)```$/s, '$1');
   return await mermaidParse(definition, { extension: 'svg' });
 };
 
 const fileExists = async function (path) {
-  let exists;
-  fs.stat(path)
-    .then(() => { exists = true })
-    .catch(() => { exists = false });
-  return exists;
-}
+  try {
+    await fs.stat(path);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
 const checkDirectories = async function (input, output) {
   const inputExists = await fileExists(input);
   const outputExists = await fileExists(output);
-  const inputStats = inputExists && await fs.stat(input);
-  const outputStats = outputExists && await fs.stat(output);
+  const inputStats = inputExists && (await fs.stat(input));
+  const outputStats = outputExists && (await fs.stat(output));
   if (!inputExists || !inputStats.isDirectory()) {
-    console.error(chalk.red.bold('Error: input does not exist or is not a directory.'));
+    printError('input does not exist or is not a directory.', true);
     process.exit(1);
   }
   if (!outputExists || !outputStats.isDirectory()) {
-    console.error(chalk.red.bold('Error: output does not exist or is not a directory.'));
+    printError('output does not exist or is not a directory.', true);
     process.exit(1);
   }
 };
@@ -36,21 +53,28 @@ const checkDirectories = async function (input, output) {
 const buildFiles = async function (input, output, all, verbose) {
   await checkDirectories(input, output);
 
-  const files = await fs.readdir(input);
-  files.forEach(async (fileName) => {
+  const fileNames = await fs.readdir(input);
+
+  for (const fileName of fileNames) {
     const filePath = `${input}/${fileName}`;
     const fileStats = await fs.stat(filePath);
     const diagramPath = `${output}/${fileName.replace(/\.md$/, '.svg')}`;
     const diagramExists = await fileExists(diagramPath);
     const skip = diagramExists && !all;
     if (!fileStats.isFile() || !fileName.endsWith('.md') || skip) {
-      return;
+      continue;
     }
-    if (verbose) console.log(chalk.bold(fileName));
-    const md = await fs.readFile(filePath, 'utf8');
-    const diagram = await mdToDiagram(md);
-    await fs.writeFile(diagramPath, diagram, 'utf8');
-  });
+    if (verbose) printFilename(fileName);
+    try {
+      const md = await fs.readFile(filePath, 'utf8');
+      const diagram = await mdToDiagram(md);
+      await fs.writeFile(diagramPath, diagram, 'utf8');
+      if (verbose) printSuccess(' OK');
+    } catch (err) {
+      if (verbose) printError(' Error', false);
+      printError(`${fileName}: ${err.message}`, true);
+    }
+  }
 };
 
 const build = async function (...args) {
@@ -62,11 +86,15 @@ const build = async function (...args) {
 };
 
 program
-  .description(`Parses md files in input directory and will save the diagrams into input directory (rescursive).
-    More Information: https://www.npmjs.com/package/mermaid-builder`)
+  .description(
+    `Reads md files in input directory and saves the diagrams (svg) into output directory.
+    More Information: https://www.npmjs.com/package/mermaider`
+  )
   .option('-a, --all', 'Re-build all diagrams. This will also build files that already exists (overwrite).')
   .option('-v, --verbose', 'Log files while beeing processed.')
   .argument('<input>', 'The input directory where the MD files are.')
   .argument('<output>', 'The output directory where the diagrams will be saved.')
   .action(build)
   .parse();
+
+export { build };
