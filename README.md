@@ -50,9 +50,19 @@ mermaider --all ./md-files ./svg-files
 * output: The output directory where the diagrams will be saved.
 
 #### Options
-* -a, --all: Re-build all diagrams. This will also build files that already exists (overwrite).
+* -a, --all: Re-build all diagrams. This will also build files that already exist (overwrite).
+* -i, --img: Fix svg files to be included as img tag.
 * -v, --verbose: Log files while beeing processed.
 * -h, --help: display help for command
+
+## ChangeLog
+
+### 0.2.0
+* Features
+  * img compatibility: now you can pass -i or --img option to make svg files able to be included as img tag.
+
+### 0.1.0
+Initial Version
 
 ## License
 [MIT](./LICENSE)

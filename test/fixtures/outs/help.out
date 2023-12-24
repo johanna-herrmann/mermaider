@@ -9,6 +9,7 @@ Arguments:
 
 Options:
   -a, --all      Re-build all diagrams. This will also build files that already
-                 exists (overwrite).
+                 exist (overwrite).
+  -i, --img      Fix svg files to be included as img tag.
   -v, --verbose  Log files while beeing processed.
   -h, --help     display help for command

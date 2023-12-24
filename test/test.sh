@@ -14,6 +14,11 @@ echo 'prepare: building all initial'
 mkdir out/init
 mermaider fixtures out/init &> /dev/null
 
+# all initial with -i
+echo 'prepare: building all initial, -i set'
+mkdir out/initWithI
+mermaider -i fixtures out/initWithI &> /dev/null
+
 # --all not set
 echo 'prepare: --all NOT set'
 mkdir out/notAll

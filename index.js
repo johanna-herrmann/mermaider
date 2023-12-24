@@ -26,6 +26,12 @@ const mdToDiagram = async function (md) {
   return await mermaidParse(definition, { extension: 'svg' });
 };
 
+const fixForImg = function (diagram) {
+  const width = diagram.replace(/^.*?viewbox="-?[0-9.]+ -?[0-9.]+ ([0-9.]+) [0-9.]+".*$/isu, '$1');
+  const diagramWithWidth = diagram.replace(/width=".*?"/iu, `width="${width}"`);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n${diagramWithWidth}`;
+};
+
 const fileExists = async function (path) {
   try {
     await fs.stat(path);
@@ -50,7 +56,7 @@ const checkDirectories = async function (input, output) {
   }
 };
 
-const buildFiles = async function (input, output, all, verbose) {
+const buildFiles = async function (input, output, all, img, verbose) {
   await checkDirectories(input, output);
 
   const fileNames = await fs.readdir(input);
@@ -67,7 +73,8 @@ const buildFiles = async function (input, output, all, verbose) {
     if (verbose) printFilename(fileName);
     try {
       const md = await fs.readFile(filePath, 'utf8');
-      const diagram = await mdToDiagram(md);
+      let diagram = await mdToDiagram(md);
+      if (img) diagram = fixForImg(diagram);
       await fs.writeFile(diagramPath, diagram, 'utf8');
       if (verbose) printSuccess(' OK');
     } catch (err) {
@@ -80,9 +87,10 @@ const buildFiles = async function (input, output, all, verbose) {
 const build = async function (...args) {
   const [input, output, options] = args;
   const all = options.all ?? false;
+  const img = options.img ?? false;
   const verbose = options.verbose ?? false;
 
-  await buildFiles(input, output, all, verbose);
+  await buildFiles(input, output, all, img, verbose);
 };
 
 program
@@ -90,7 +98,8 @@ program
     `Reads md files in input directory and saves the diagrams (svg) into output directory.
     More Information: https://www.npmjs.com/package/mermaider`
   )
-  .option('-a, --all', 'Re-build all diagrams. This will also build files that already exists (overwrite).')
+  .option('-a, --all', 'Re-build all diagrams. This will also build files that already exist (overwrite).')
+  .option('-i, --img', 'Fix svg files to be included as img tag.')
   .option('-v, --verbose', 'Log files while beeing processed.')
   .argument('<input>', 'The input directory where the MD files are.')
   .argument('<output>', 'The output directory where the diagrams will be saved.')
