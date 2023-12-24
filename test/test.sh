@@ -31,7 +31,18 @@ echo 'prepare: --all IS set'
 mkdir out/all
 mermaider fixtures out/all &> /dev/null
 echo -n "modified" > out/all/simple.svg
+echo -n "modified" > out/all/subgraphs.svg
 mermaider --all fixtures out/all &> /dev/null
+
+# --update set
+echo 'prepare: --update is set'
+mkdir out/update
+mermaider fixtures out/update &> /dev/null
+echo -n "modified" > out/update/simple.svg
+echo -n "modified" > out/update/subgraphs.svg
+sleep 2
+touch fixtures/simple.md
+mermaider --update fixtures out/update &> /dev/null
 
 # one invalid
 echo 'prepare: one md file is invalid'

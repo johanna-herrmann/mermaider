@@ -71,6 +71,14 @@ describe('mermaider', () => {
       expect(actualSimple).toBe('modified');
     });
 
+    test('does override for newer, if --update is set.', async () => {
+      const actualSubgraphs = await getFileContent('out/update/subgraphs.svg');
+      await assertDiagram('forms-and-links.svg', 'update');
+      await assertDiagram('sequenceWithActors.svg', 'update');
+      await assertDiagram('simple.svg', 'update');
+      expect(actualSubgraphs).toBe('modified');
+    });
+
     test('still builds valid diagrams, if one is invalid.', async () => {
       const invalidExists = await fileExists('out/oneInvalid/invalid.svg');
       await assertDiagram('simple.svg', 'oneInvalid');

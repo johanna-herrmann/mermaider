@@ -52,6 +52,7 @@ mermaider --all ./md-files ./svg-files
 #### Options
 * -a, --all: Re-build all diagrams. This will also build files that already exist (overwrite).
 * -i, --img: Fix svg files to be included as img tag.
+* -u, --update: Like -a, but only where the md file is newer than the existing svg file.
 * -v, --verbose: Log files while beeing processed.
 * -h, --help: display help for command
 
@@ -60,6 +61,9 @@ mermaider --all ./md-files ./svg-files
 ### 0.2.0
 * Features
   * img compatibility: now you can pass -i or --img option to make svg files able to be included as img tag.
+  * improved overwriting: --update only overwrites existing svg if md is newer.
+* Fixes
+  * fixed typo: `files already exists` --> `files already exist`
 
 ### 0.1.0
 Initial Version
