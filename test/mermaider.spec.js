@@ -32,11 +32,28 @@ describe('mermaider', () => {
       expect(diagram).toMatch(new RegExp(needles[name], 'su'));
     };
 
+    const assertDiagramImgFixed = async function (name) {
+      const diagram = await getFileContent(`./out/initWithI/${name}`);
+      const width = diagram.replace(/^.*?viewbox="-?[0-9.]+ -?[0-9.]+ ([0-9.]+) [0-9.]+".*$/isu, '$1');
+
+      expect(diagram).toMatch(/^<\?xml version="1.0" encoding="UTF-8"\?>.*<svg.*width="[^%]+".*>.*<\/svg>$/isu);
+      expect(diagram).toMatch(new RegExp(needles[name], 'su'));
+      expect(width).toMatch(/^[0-9.]+$/u);
+      expect(parseFloat(width)).toBeGreaterThan(99.9);
+    };
+
     test('builds all diagrams initially.', async () => {
       await assertDiagram('forms-and-links.svg', 'init');
       await assertDiagram('sequenceWithActors.svg', 'init');
       await assertDiagram('simple.svg', 'init');
       await assertDiagram('subgraphs.svg', 'init');
+    });
+
+    test('builds all diagrams initially, with -i set.', async () => {
+      await assertDiagramImgFixed('forms-and-links.svg');
+      await assertDiagramImgFixed('sequenceWithActors.svg');
+      await assertDiagramImgFixed('simple.svg');
+      await assertDiagramImgFixed('subgraphs.svg');
     });
 
     test('does override, if --all IS set.', async () => {
@@ -52,6 +69,14 @@ describe('mermaider', () => {
       await assertDiagram('sequenceWithActors.svg', 'notAll');
       await assertDiagram('subgraphs.svg', 'notAll');
       expect(actualSimple).toBe('modified');
+    });
+
+    test('does override for newer, if --update is set.', async () => {
+      const actualSubgraphs = await getFileContent('out/update/subgraphs.svg');
+      await assertDiagram('forms-and-links.svg', 'update');
+      await assertDiagram('sequenceWithActors.svg', 'update');
+      await assertDiagram('simple.svg', 'update');
+      expect(actualSubgraphs).toBe('modified');
     });
 
     test('still builds valid diagrams, if one is invalid.', async () => {

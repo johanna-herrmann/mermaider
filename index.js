@@ -26,6 +26,12 @@ const mdToDiagram = async function (md) {
   return await mermaidParse(definition, { extension: 'svg' });
 };
 
+const fixForImg = function (diagram) {
+  const width = diagram.replace(/^.*?viewbox="-?[0-9.]+ -?[0-9.]+ ([0-9.]+) [0-9.]+".*$/isu, '$1');
+  const diagramWithWidth = diagram.replace(/width=".*?"/iu, `width="${width}"`);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n${diagramWithWidth}`;
+};
+
 const fileExists = async function (path) {
   try {
     await fs.stat(path);
@@ -33,6 +39,12 @@ const fileExists = async function (path) {
   } catch {
     return false;
   }
+};
+
+const isMdNewer = async function (mdPath, svgPath) {
+  const mdStats = await fs.stat(mdPath);
+  const svgStats = await fs.stat(svgPath);
+  return mdStats.mtime.getTime() > svgStats.mtime.getTime();
 };
 
 const checkDirectories = async function (input, output) {
@@ -50,7 +62,7 @@ const checkDirectories = async function (input, output) {
   }
 };
 
-const buildFiles = async function (input, output, all, verbose) {
+const buildFiles = async function (input, output, all, update, img, verbose) {
   await checkDirectories(input, output);
 
   const fileNames = await fs.readdir(input);
@@ -60,14 +72,16 @@ const buildFiles = async function (input, output, all, verbose) {
     const fileStats = await fs.stat(filePath);
     const diagramPath = `${output}/${fileName.replace(/\.md$/, '.svg')}`;
     const diagramExists = await fileExists(diagramPath);
-    const skip = diagramExists && !all;
+    const isNewer = diagramExists && (await isMdNewer(filePath, diagramPath));
+    const skip = diagramExists && !all && (!update || !isNewer);
     if (!fileStats.isFile() || !fileName.endsWith('.md') || skip) {
       continue;
     }
     if (verbose) printFilename(fileName);
     try {
       const md = await fs.readFile(filePath, 'utf8');
-      const diagram = await mdToDiagram(md);
+      let diagram = await mdToDiagram(md);
+      if (img) diagram = fixForImg(diagram);
       await fs.writeFile(diagramPath, diagram, 'utf8');
       if (verbose) printSuccess(' OK');
     } catch (err) {
@@ -80,9 +94,11 @@ const buildFiles = async function (input, output, all, verbose) {
 const build = async function (...args) {
   const [input, output, options] = args;
   const all = options.all ?? false;
+  const update = options.update ?? false;
+  const img = options.img ?? false;
   const verbose = options.verbose ?? false;
 
-  await buildFiles(input, output, all, verbose);
+  await buildFiles(input, output, all, update, img, verbose);
 };
 
 program
@@ -90,7 +106,9 @@ program
     `Reads md files in input directory and saves the diagrams (svg) into output directory.
     More Information: https://www.npmjs.com/package/mermaider`
   )
-  .option('-a, --all', 'Re-build all diagrams. This will also build files that already exists (overwrite).')
+  .option('-a, --all', 'Re-build all diagrams. This will also build files that already exist (overwrite).')
+  .option('-i, --img', 'Fix svg files to be included as img tag.')
+  .option('-u, --update', 'Like -a, but only where the md file is newer than the existing svg file.')
   .option('-v, --verbose', 'Log files while beeing processed.')
   .argument('<input>', 'The input directory where the MD files are.')
   .argument('<output>', 'The output directory where the diagrams will be saved.')
