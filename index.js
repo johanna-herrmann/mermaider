@@ -22,7 +22,7 @@ const printFilename = function (filename) {
 };
 
 const mdToDiagram = async function (md) {
-  const definition = md.replace(/^```mermaid\s(.*)```$/s, '$1');
+  const definition = md.replace(/^.*```mermaid\s(.*)```.*$/su, '$1');
   return await mermaidParse(definition, { extension: 'svg' });
 };
 

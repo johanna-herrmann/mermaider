@@ -50,6 +50,19 @@ mkdir out/oneInvalid
 cp fixtures/invalid.md.invalid out/invalid.md
 cp fixtures/simple.md out/simple.md
 mermaider out out/oneInvalid &> /dev/null
+rm out/invalid.md
+rm out/simple.md
+
+# one leading, one trailing
+echo 'prepare: one md file has leading contents, one has trailing'
+mkdir out/leadingAndTrailing
+cp fixtures/leading.md.leading out/leading.md
+cp fixtures/trailing.md.trailing out/trailing.md
+cp fixtures/simple.md out/simple.md
+mermaider out out/leadingAndTrailing &> /dev/null
+rm out/leading.md
+rm out/trailing.md
+rm out/simple.md
 
 
 ###### outputs
@@ -80,6 +93,8 @@ mermaider in 2> out/missingArgs1.err 1> out/missingArgs1.out
 
 # one invalid
 echo 'prepare output: one md file is invalid'
+cp fixtures/invalid.md.invalid out/invalid.md
+cp fixtures/simple.md out/simple.md
 mermaider --all out out/tmp 2> out/oneInvalid.err 1> out/oneInvalid.out
 mermaider --all --verbose out out/tmp 2> out/oneInvalidVerbose.err 1> out/oneInvalidVerbose.out
 mermaider --all --verbose out out/tmp &> out/oneInvalidVerbose.both
