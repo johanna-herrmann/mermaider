@@ -12,7 +12,14 @@ mkdir out
 # all initial
 echo 'prepare: building all initial'
 mkdir out/init
+touch out/init/test.svg
 mermaider fixtures out/init &> /dev/null
+
+# all - --delete set
+echo 'prepare: building all - --delete set'
+mkdir out/delete
+touch out/delete/test.svg
+mermaider -d fixtures out/delete &> /dev/null
 
 # all initial with -i
 echo 'prepare: building all initial, -i set'
