@@ -51,12 +51,20 @@ mermaider --all ./md-files ./svg-files
 
 #### Options
 * -a, --all: Re-build all diagrams. This will also build files that already exist (overwrite).
+* -d, --delete: Delete SVG files with no matching MD file.
 * -i, --img: Fix svg files to be included as img tag.
 * -u, --update: Like -a, but only where the md file is newer than the existing svg file.
 * -v, --verbose: Log files while beeing processed.
 * -h, --help: display help for command
 
 ## ChangeLog
+
+### 0.3.0
+* Features
+  * deletion: with parameter -d svg files will be deleted, if there is no matching md file
+* Fixes
+  * md file:
+    leading and trailing contents before/after mermaid code fence caused mermaid syntax errors
 
 ### 0.2.0
 * Features

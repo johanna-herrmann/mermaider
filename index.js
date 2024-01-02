@@ -22,7 +22,7 @@ const printFilename = function (filename) {
 };
 
 const mdToDiagram = async function (md) {
-  const definition = md.replace(/^```mermaid\s(.*)```$/s, '$1');
+  const definition = md.replace(/^.*```mermaid\s(.*)```.*$/su, '$1');
   return await mermaidParse(definition, { extension: 'svg' });
 };
 
@@ -63,8 +63,6 @@ const checkDirectories = async function (input, output) {
 };
 
 const buildFiles = async function (input, output, all, update, img, verbose) {
-  await checkDirectories(input, output);
-
   const fileNames = await fs.readdir(input);
 
   for (const fileName of fileNames) {
@@ -91,14 +89,34 @@ const buildFiles = async function (input, output, all, update, img, verbose) {
   }
 };
 
+const removeOldSvgs = async function (input, output) {
+  const inputFileNames = await fs.readdir(input);
+  const outputFileNames = await fs.readdir(output);
+
+  for (const outputFileName of outputFileNames) {
+    const inputFileName = outputFileName.replace(/\.svg$/, '.md');
+    const outputPath = `${output}/${outputFileName}`;
+    if (!inputFileNames.find((filename) => filename === inputFileName)) {
+      await fs.unlink(outputPath);
+    }
+  }
+};
+
 const build = async function (...args) {
   const [input, output, options] = args;
   const all = options.all ?? false;
-  const update = options.update ?? false;
+  const remove = options.delete ?? false;
   const img = options.img ?? false;
+  const update = options.update ?? false;
   const verbose = options.verbose ?? false;
 
+  await checkDirectories(input, output);
   await buildFiles(input, output, all, update, img, verbose);
+
+  if (!remove) {
+    return;
+  }
+  await removeOldSvgs(input, output);
 };
 
 program
@@ -107,6 +125,7 @@ program
     More Information: https://www.npmjs.com/package/mermaider`
   )
   .option('-a, --all', 'Re-build all diagrams. This will also build files that already exist (overwrite).')
+  .option('-d, --delete', 'Delete SVG files with no matching MD file.')
   .option('-i, --img', 'Fix svg files to be included as img tag.')
   .option('-u, --update', 'Like -a, but only where the md file is newer than the existing svg file.')
   .option('-v, --verbose', 'Log files while beeing processed.')

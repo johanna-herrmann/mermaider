@@ -22,6 +22,8 @@ describe('mermaider', () => {
       'forms-and-links.svg': 'data of forms and links',
       'sequenceWithActors.svg': 'See you later aligator',
       'simple.svg': 'simple graph',
+      'leading.svg': 'simple graph',
+      'trailing.svg': 'simple graph',
       'subgraphs.svg': 'B in A Subgraph'
     };
 
@@ -47,6 +49,15 @@ describe('mermaider', () => {
       await assertDiagram('sequenceWithActors.svg', 'init');
       await assertDiagram('simple.svg', 'init');
       await assertDiagram('subgraphs.svg', 'init');
+      expect(await fileExists('./out/init/test.svg')).toBeTruthy();
+    });
+
+    test('builds all diagrams - --delete set.', async () => {
+      await assertDiagram('forms-and-links.svg', 'delete');
+      await assertDiagram('sequenceWithActors.svg', 'delete');
+      await assertDiagram('simple.svg', 'delete');
+      await assertDiagram('subgraphs.svg', 'delete');
+      expect(await fileExists('./out/delete/test.svg')).toBeFalsy();
     });
 
     test('builds all diagrams initially, with -i set.', async () => {
@@ -83,6 +94,12 @@ describe('mermaider', () => {
       const invalidExists = await fileExists('out/oneInvalid/invalid.svg');
       await assertDiagram('simple.svg', 'oneInvalid');
       expect(invalidExists).toBeFalsy();
+    });
+
+    test('still builds all diagrams, if mermaid code fences are followed by or following other contents.', async () => {
+      await assertDiagram('simple.svg', 'leadingAndTrailing');
+      await assertDiagram('leading.svg', 'leadingAndTrailing');
+      await assertDiagram('trailing.svg', 'leadingAndTrailing');
     });
   });
 
