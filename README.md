@@ -59,6 +59,9 @@ mermaider --all ./md-files ./svg-files
 
 ## ChangeLog
 
+### 0.3.1
+* Just fixes my name
+
 ### 0.3.0
 * Features
   * deletion: with parameter -d svg files will be deleted, if there is no matching md file
