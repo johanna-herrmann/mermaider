@@ -59,6 +59,9 @@ mermaider --all ./md-files ./svg-files
 
 ## ChangeLog
 
+### 0.3.2
+* Improves demo image
+
 ### 0.3.1
 * Just fixes my name
 
