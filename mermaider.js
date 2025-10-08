@@ -23,7 +23,8 @@ const printFilename = function (filename) {
 
 const mdToDiagram = async function (md) {
   const definition = md.replace(/^.*```mermaid\s(.*)```.*$/su, '$1');
-  return await mermaidParse(definition, { extension: 'svg' });
+  const puppeteerConfig = { args: ['--no-sandbox', '--disable-setuid-sandbox']};
+  return await mermaidParse(definition, { extension: 'svg' }, puppeteerConfig);
 };
 
 const fixForImg = function (diagram) {
