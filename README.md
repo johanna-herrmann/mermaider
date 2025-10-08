@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/mermaider)](https://www.npmjs.com/package/mermaider)
 
-Simply build [Mermaid](https://mermaid.js.org/) diagram SVGs based on Mardown files.
+Simply build [Mermaid](https://mermaid.js.org/) diagram SVGs based on Markdown files.
 
 ![using mermaider](./mermaider.png)
 
@@ -15,7 +15,7 @@ npm install -g mermaider
 
 ### Define Diagrams
 First, create markdown files that contain the diagram definitions, using mermaid syntax. \
-The diargram definitions must be in a `mermaid` code fence.
+The diagram definitions must be in a `mermaid` code fence.
 
 Example:
 content of `example-diagram.md`
@@ -29,7 +29,7 @@ flowchart LR
 ```
 ````
 
-Benifit of using markdown files: You can use plugins to highlight definitions and get diagram previews. \
+Benefit of using markdown files: You can use plugins to highlight definitions and get diagram previews. \
 Here is an example, using [Visual Studio Code](https://code.visualstudio.com/): \
 ![example](./vsc-md-highlight-preview-example.png)
 
@@ -54,7 +54,7 @@ mermaider --all ./md-files ./svg-files
 * -d, --delete: Delete SVG files with no matching MD file.
 * -i, --img: Fix svg files to be included as img tag.
 * -u, --update: Like -a, but only where the md file is newer than the existing svg file.
-* -v, --verbose: Log files while beeing processed.
+* -v, --verbose: Log files while being processed.
 * -h, --help: display help for command
 
 ## ChangeLog

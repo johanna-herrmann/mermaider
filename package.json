@@ -1,18 +1,18 @@
 {
   "name": "mermaider",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Builds mermaid diagrams based on definitions in MarkDown files.",
-  "main": "index.js",
+  "main": "mermaider.js",
   "type": "module",
   "bin": {
-    "mermaider": "index.js"
+    "mermaider": "mermaider.js"
   },
   "engines": {
     "node": ">=16.0.0"
   },
   "scripts": {
     "test": "cd test && chmod a+x ./test.sh && ./test.sh",
-    "lint": "eslint '**/*.js' --quiet --fix"
+    "lint": "eslint **/*.js --quiet --fix"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
   "author": "johanna-herrmann",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^5.3.0",
+    "chalk": "^5.6.2",
     "commander": "^11.1.0",
     "mermaid-parse": "^2.1.0"
   },
