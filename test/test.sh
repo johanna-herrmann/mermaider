@@ -8,6 +8,7 @@ cd ..
 npm install -g
 # shellcheck disable=SC2164
 cd test
+export PUPPETEER_ARGS="--no-sandbox --disable-setuid-sandbox"
 
 mkdir out
 
