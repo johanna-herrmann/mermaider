@@ -11,7 +11,7 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "test": "cd test && chmod a+x ./test.sh && ./test.sh",
+    "test": "npm install -g && cd test && chmod a+x ./test.sh && ./test.sh",
     "lint": "eslint **/*.js --quiet --fix"
   },
   "repository": {

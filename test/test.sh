@@ -4,13 +4,7 @@
 trap "rm -rf out; trap INT; trap EXIT; exit 1" INT
 trap "rm -rf out; trap INT; trap EXIT" EXIT
 
-cd ..
-npm install -g
-# shellcheck disable=SC2164
-cd test
-
 mkdir out
-
 
 ###### building
 
