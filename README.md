@@ -59,6 +59,9 @@ mermaider --all ./md-files ./svg-files
 
 ## ChangeLog
 
+### 0.3.3
+* Fixes compromised chalk dependency
+
 ### 0.3.2
 * Improves demo image
 
